@@ -32,9 +32,14 @@ case $yn in
         * ) echo "Please mount all mountpoints to /mnt and retry"; exit;;
 esac
 
+# Install a larger font
+echo -e "\n > Installing a larger font"
+pacman -S terminus-font --noconfirm
+setfont ter-v22n
+
 # Install system and some basic packages
 echo -e "\n > Installing base system packages"
-pacstrap -i /mnt base base-devel zsh git vim btrfs-progs sudo openssh
+pacstrap -i /mnt base base-devel zsh git vim btrfs-progs sudo openssh terminus-font
 
 # Generate the fstab
 echo -e "\n > Generating fstab"

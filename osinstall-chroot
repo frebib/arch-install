@@ -16,7 +16,7 @@ locale-gen
 echo LANG=en_GB.UTF-8 > /etc/locale.conf
 
 echo -e "\n > Setting the system keymap"
-echo "KEYMAP=dvorak-uk" > /etc/vconsole.conf
+echo -e "KEYMAP=dvorak-uk\nFONT=ter-v22n" > /etc/vconsole.conf
 
 read -p "`echo $'\n'` > Do you want to edit the mkinitcpio build hooks? [y/N] " yn
 sed -i 's|^\(HOOKS=".* block\).*\(filesystems.*"\)|\1 consolefont keymap keyboard encrypt lvm2 btrfs \2|' /etc/mkinitcpio.conf
