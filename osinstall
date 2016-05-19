@@ -1,0 +1,53 @@
+#!/bin/sh
+
+if [[ $EUID -ne 0 ]]; then
+    echo "You must run this script on the arch install disk as a root user!"
+    #exit 1
+fi
+
+# Warn about not running on the arch install disk
+if [[ $(hostname) != "archiso" ]]; then
+    read -p "Not running on the arch install ISO, are you sure you want to continue? [y/N] " yn
+    case $yn in
+        [Yy]* ) break;;
+            * ) exit;;
+    esac
+fi
+
+checknet() {
+    curl google.com &>/dev/null
+    return $?
+}
+
+# Check for an internet connection
+if ! checknet; then
+    echo -e "No internet connection\nPlease connect a network interface and try again"
+    exit 1
+fi
+
+# Confirm all partitions are mounted to /mnt
+read -p "Are all partitions mounted to /mnt? [y/N] " yn
+case $yn in
+    [Yy]* ) break;;
+        * ) echo "Please mount all mountpoints to /mnt and retry"; exit;;
+esac
+
+# Install system and some basic packages
+pacstrap -i /mnt base base-devel zsh git sudo refind-efi
+# Generate the fstab
+genfstab -U /mnt > /mnt/etc/fstab
+
+echo -e "Entering chroot...\n"
+
+dir=`dirname ${BASH_SOURCE[0]}`
+arch-chroot /mnt $dir/osinstall-chroot
+
+# Reboot
+read -p "Reboot? [Y/n] " yn
+case \$yn in
+        * ) umount -R /mnt;
+            systemctl reboot;;
+    [Nn]* ) break;;
+esac
+
+EOF
