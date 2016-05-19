@@ -39,8 +39,13 @@ genfstab -U /mnt > /mnt/etc/fstab
 
 echo -e "Entering chroot...\n"
 
+# Copy the chroot script into the new root
 dir=`dirname ${BASH_SOURCE[0]}`
-arch-chroot /mnt $dir/osinstall-chroot
+cp $dir/osinstall-chroot /mnt
+arch-chroot /mnt /osinstall-chroot
+
+# Remove chroot script
+rm /mnt/osinstall-chroot
 
 # Reboot
 read -p "Reboot? [Y/n] " yn
