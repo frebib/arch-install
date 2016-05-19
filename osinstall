@@ -45,9 +45,9 @@ arch-chroot /mnt $dir/osinstall-chroot
 # Reboot
 read -p "Reboot? [Y/n] " yn
 case \$yn in
+    [Nn]* ) break;;
         * ) umount -R /mnt;
             systemctl reboot;;
-    [Nn]* ) break;;
 esac
 
 EOF
