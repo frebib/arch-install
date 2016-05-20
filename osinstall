@@ -34,7 +34,7 @@ esac
 
 # Install system and some basic packages
 echo -e "\n > Installing base system packages"
-pacstrap -i /mnt base base-devel zsh git sudo refind-efi
+pacstrap -i /mnt base base-devel zsh git vim sudo refind-efi
 
 # Generate the fstab
 echo -e "\n > Generating fstab"
