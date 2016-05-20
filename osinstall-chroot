@@ -32,13 +32,34 @@ mkinitcpio -p $(uname -s | sed 's/.*/\L\1/g')
 echo -e "\n > Please set the root password"
 passwd 
 
+bootloaderconfig() {
+    echo -e "\n > Block devices:"
+    lsblk
+    echo -e "\n\n"
+    read -p "`echo $'\n'` > Enter the root block device: " dev
+    uuid=$(blkid | sed -n 's|$dev: UUID="\([0-9a-f\-]+)".*|\1|p')
+    if [[ -z $uuid ]]; then
+        echo -e "\nDevice $dev not found\nPlease try again"
+        exit 1
+    fi
+
+    currentvg=$(vgdisplay | sed -n 's/\s*VG Name\s*\(.*\)/\1/p')
+    volname=$(mount | sed -n "s|/dev/mapper/$currentvg-\(.*\)\s*on /\s.*|\1|p")
+
+    kernelname=$(uname -s | sed 's/.*/\L\1/g')
+    quiet="loglevel=3 rd.systemd.show_status=false rd.udev.log-priority=3"
+    options="rw cryptdevice=UUID=$uuid:arch root=/dev/mapper/arch-$volname resume=/dev/mapper/arch-swap initrd=initramfs-$kernelname.img $quiet"
+    echo -e "\"Boot with standard options\"    "$options"\n\"Boot to single-user mode\"      \"$options single\"" > /boot/refind_linux.conf
+}
+
 # Install bootloader
 read -p "`echo $'\n'` > Do you want to install rEFInd bootloader? [y/N] " yn
 case $yn in
     [Yy]* ) pacman -S sbsigntools tar wget --noconfirm --needed;
             wget 'http://www.codon.org.uk/~mjg59/shim-signed/shim-signed-0.2.tgz';
             tar xf shim-signed-0.2.tgz;
-            refind-install --localkeys --shim shim-signed/shim.efi;;
+            refind-install --localkeys --shim shim-signed/shim.efi;
+            bootloaderconfig;;
         * ) break;;
 esac
 
