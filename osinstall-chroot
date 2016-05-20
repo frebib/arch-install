@@ -38,3 +38,6 @@ case $yn in
     [Yy]* ) refind-install --localkeys;;
         * ) break;;
 esac
+
+echo -e "\n > Starting shell. Type 'exit' to continue installation"
+/usr/bin/zsh
