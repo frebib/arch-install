@@ -3,7 +3,7 @@
 # Set the hostname
 read -p "`echo $'\n'` > Enter the hostname: " hostname
 echo "Setting the hostname..."
-echo "$hostname" > /mnt/etc/hostname
+echo "$hostname" > /etc/hostname
 
 # Set the localtime to London
 echo -e "\n > Setting the timezone"
