@@ -34,7 +34,7 @@ esac
 
 # Install system and some basic packages
 echo -e "\n > Installing base system packages"
-pacstrap -i /mnt base base-devel zsh git vim btrfs-progs sudo refind-efi
+pacstrap -i /mnt base base-devel zsh git vim btrfs-progs sudo
 
 # Generate the fstab
 echo -e "\n > Generating fstab"
@@ -44,7 +44,7 @@ echo -e "\n > Entering chroot...\n"
 
 # Copy the chroot script into the new root
 dir=`dirname ${BASH_SOURCE[0]}`
-cp $dir/osinstall-chroot /mnt
+cp $dir/osinstall-chroot $dir/osinstall-refind /mnt
 arch-chroot /mnt /osinstall-chroot
 
 # Remove chroot script

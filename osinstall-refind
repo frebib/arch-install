@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Install refind bootloader
+pacman -S refind-efi sbsigntools tar curl --noconfirm --needed
+curl 'http://www.codon.org.uk/~mjg59/shim-signed/shim-signed-0.2.tgz' | tar xz -C /tmp
+refind-install --localkeys --shim /tmp/shim-signed/shim.efi
+
+# Query the user for the root block device
+echo -e "\n > Block devices:"
+lsblk
+echo -e "\n"
+read -p "`echo $'\n'` > Enter the root block device: " dev
+
+uuid=$(blkid | sed -n "s|$dev: UUID=\"\\([0-9a-f\\-]*\\)\".*|\\1|p")
+if [[ -z $uuid ]]; then
+    echo -e "\nDevice $dev not found\nPlease try again"
+    exit 1
+fi
+
+# Parse for some values
+currentvg=$(vgdisplay | sed -n 's/\s*VG Name\s*\(.*\)/\1/p')
+volname=$(mount | sed -n "s|/dev/mapper/$currentvg-\\(.*\\)\\s*on /\\s.*|\\1|p")
+
+# Write the boot configs to file
+kernelname=$(uname -s | tr '[:upper:]' '[:lower:]')
+quiet="loglevel=3 rd.systemd.show_status=false rd.udev.log-priority=3"
+options="rw cryptdevice=UUID=$uuid:arch root=/dev/mapper/arch-$volname resume=/dev/mapper/arch-swap initrd=initramfs-$kernelname.img $quiet"
+
+echo -e "\"Boot with standard options\"    \"$options\"\n\"Boot to single-user mode\"      \"$options single\"" > /boot/refind_linux.conf
+echo -e "\n > Written rEFInd boot configuration to /boot/refind_linux.conf"
