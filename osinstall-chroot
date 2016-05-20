@@ -35,7 +35,10 @@ passwd
 # Install bootloader
 read -p "`echo $'\n'` > Do you want to install rEFInd bootloader? [y/N] " yn
 case $yn in
-    [Yy]* ) refind-install --localkeys;;
+    [Yy]* ) pacman -S sbsigntools tar wget --noconfirm --needed;
+            wget 'http://www.codon.org.uk/~mjg59/shim-signed/shim-signed-0.2.tgz';
+            tar xf shim-signed-0.2.tgz;
+            refind-install --localkeys --shim shim-signed/shim.efi;;
         * ) break;;
 esac
 
