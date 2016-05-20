@@ -26,7 +26,7 @@ case $yn in
 esac
 # Build initial ramdisk
 echo -e "\n > Building initial ramdisk"
-mkinitcpio -p linux
+mkinitcpio -p $(uname -s | sed 's/.*/\L\1/g')
 
 # Set the root password
 echo -e "\n > Please set the root password"
