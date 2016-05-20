@@ -34,7 +34,7 @@ esac
 
 # Install a larger font
 echo -e "\n > Installing a larger font"
-pacman -S terminus-font --noconfirm
+pacman -S terminus-font --noconfirm --needed
 setfont ter-v22n
 
 # Install system and some basic packages
