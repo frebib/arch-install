@@ -57,5 +57,3 @@ case $yn in
         * ) umount -R /mnt;
             systemctl reboot;;
 esac
-
-EOF
