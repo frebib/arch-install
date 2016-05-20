@@ -26,18 +26,21 @@ if ! checknet; then
 fi
 
 # Confirm all partitions are mounted to /mnt
-read -p "Are all partitions mounted to /mnt? [y/N] " yn
+read -p "`echo $'\n'` > Are all partitions mounted to /mnt? [y/N] " yn
 case $yn in
     [Yy]* ) break;;
         * ) echo "Please mount all mountpoints to /mnt and retry"; exit;;
 esac
 
 # Install system and some basic packages
+echo -e "\n > Installing base system packages"
 pacstrap -i /mnt base base-devel zsh git sudo refind-efi
+
 # Generate the fstab
+echo -e "\n > Generating fstab"
 genfstab -U /mnt > /mnt/etc/fstab
 
-echo -e "Entering chroot...\n"
+echo -e "\n > Entering chroot...\n"
 
 # Copy the chroot script into the new root
 dir=`dirname ${BASH_SOURCE[0]}`
@@ -48,8 +51,8 @@ arch-chroot /mnt /osinstall-chroot
 rm /mnt/osinstall-chroot
 
 # Reboot
-read -p "Reboot? [Y/n] " yn
-case \$yn in
+read -p "`echo $'\n'` > Reboot? [Y/n] " yn
+case $yn in
     [Nn]* ) break;;
         * ) umount -R /mnt;
             systemctl reboot;;

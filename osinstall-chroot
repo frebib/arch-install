@@ -1,41 +1,39 @@
 #!/bin/sh
 
 # Set the hostname
-read -p "Enter the hostname: " hostname
+read -p "`echo $'\n'` > Enter the hostname: " hostname
 echo "Setting the hostname..."
 echo "$hostname" > /mnt/etc/hostname
 
 # Set the localtime to London
-echo "Setting the timezone"
+echo -e "\n > Setting the timezone"
 ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
 
 # Run locale-gen
-echo "Setting the system locale"
+echo -e "\n > Setting the system locale"
 sed -i 's|#\(en_GB.UTF-8.*\)|\1|' /etc/locale.gen
 locale-gen
 echo LANG=en_GB.UTF-8 > /etc/locale.conf
 
-echo "Setting the system keymap"
+echo -e "\n > Setting the system keymap"
 echo "KEYMAP=dvorak-uk" > /etc/vconsole.conf
 
-read -p "Do you want to edit the mkinitcpio build hooks? [y/N] " yn
-case \$yn in
+read -p "`echo $'\n'` > Do you want to edit the mkinitcpio build hooks? [y/N] " yn
+case $yn in
     [Yy]* ) vim /etc/mkinitcpio.conf; break;;
         * ) break;;
 esac
 # Build initial ramdisk
-echo "Building initial ramdisk"
+echo -e "\n > Building initial ramdisk"
 mkinitcpio -p linux
 
 # Set the root password
-echo "Please set the root password"
+echo -e "\n > Please set the root password"
 passwd 
 
 # Install bootloader
-read -p "Do you want to install rEFInd bootloader? [y/N] " yn
-case \$yn in
+read -p "`echo $'\n'` > Do you want to install rEFInd bootloader? [y/N] " yn
+case $yn in
     [Yy]* ) refind-install --localkeys;;
         * ) break;;
 esac
-
-echo -e "\nType 'exit' to quit chroot and finish installation\n"
