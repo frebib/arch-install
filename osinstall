@@ -43,7 +43,8 @@ genfstab -U /mnt > /mnt/etc/fstab
 echo -e "\n > Entering chroot...\n"
 
 # Copy the chroot script into the new root
-dir=`dirname ${BASH_SOURCE[0]}`
+cd `dirname $0`
+dir=`pwd`
 cp -r $dir /mnt/root
 arch-chroot /mnt /root/$(basename $dir)/osinstall-chroot
 

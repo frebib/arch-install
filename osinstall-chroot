@@ -39,7 +39,8 @@ passwd
 # Install bootloader
 read -p "`echo $'\n'` > Do you want to install rEFInd bootloader? [y/N] " yn
 case $yn in
-    [Yy]* ) ./osinstall-refind;;
+    [Yy]* ) cd `dirname $0`;
+            `pwd`/osinstall-refind;;
         * ) break;;
 esac
 
