@@ -22,7 +22,8 @@ currentvg=$(vgdisplay | sed -n 's/\s*VG Name\s*\(.*\)/\1/p')
 volname=$(mount | sed -n "s|/dev/mapper/$currentvg-\\(.*\\)\\s*on /\\s.*|\\1|p")
 
 # Write the boot configs to file
-kernelname=$(uname -s | tr '[:upper:]' '[:lower:]')
+read -p " > Enter the kernel name [default: linux] " kernel
+[[ -z $kernel ]] && kernel="linux"
 quiet="quiet loglevel=3 rd.systemd.show_status=false rd.udev.log-priority=3"
 options="rw cryptdevice=UUID=$uuid:arch root=/dev/mapper/arch-$volname resume=/dev/mapper/arch-swap initrd=initramfs-$kernelname.img $quiet"
 
