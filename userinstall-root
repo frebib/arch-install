@@ -8,7 +8,7 @@ sed -i '/#Color/s/^#//' /etc/pacman.conf
 sed -i -e '/^#\[multilib\]/{s/#//;N;s/#//}' /etc/pacman.conf
 
 # Don't compress with makepkg
-sed -i "/PKGEXT=\'.pkg.tar.xz\'/s/.xz//" /etc/makepkg.conf
+sed -i "/PKGEXT='.pkg.tar.xz'/s/.xz//" /etc/makepkg.conf
 
 # Give wheel sudo access
 sed -i '/# %wheel ALL=(ALL) ALL/s/^#//' /etc/sudoers
