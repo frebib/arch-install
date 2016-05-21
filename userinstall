@@ -9,14 +9,14 @@ if [ $EUID -eq 0 ]; then
 
     # Copy script to new user home directory
     home="/home/$user"
-    dir="$(dirname ${BASH_SOURCE[0]})"
-    script="$(basename ${BASH_SOURCE[0]})"
-    newpath="$home/$dir"
-    cp -r $dir $home
-    chown -r $user:$user $newpath
+    cd $(dirname $0)
+    dir="$(basename `pwd`)"
+    script="$(basename $0)"
+    cp -r ../$dir $home
+    chown -R $user:$user $home/$dir
 
     echo -e "\n > Switching to new user:"
-    sudo -u $user $newpath
+    sudo -u $user $home/$dir/$script
     exit 0
 fi
 
