@@ -24,6 +24,8 @@ echo -e "\n > Installing pacaur"
 ./install-pacaur
 
 echo -e "\n > Installing system packages"
+
+gpg --keyserver pgp.mit.edu --recv-keys F7E48EDB # ncurses5-compat-libs
 pacaur -S `xargs -a sys-packages` --needed
 
 read -p " > Do you want to install core appliactions? [Y/n] " yn
