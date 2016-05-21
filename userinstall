@@ -1,0 +1,52 @@
+#!/bin/sh
+
+if [ $EUID -eq 0 ]; then
+    ./userinstall-root
+
+    read -p " > Enter username for new user: " user
+    useradd -m -G wheel -s `which zsh` $user
+    passwd $user
+
+    # Copy script to new user home directory
+    home="/home/$user"
+    dir="$(dirname ${BASH_SOURCE[0]})"
+    script="$(basename ${BASH_SOURCE[0]})"
+    newpath="$home/$dir"
+    cp -r $dir $home
+    chown -r $user:$user $newpath
+
+    echo -e "\n > Switching to new user:"
+    sudo -u $user $newpath
+    exit 0
+fi
+
+echo -e "\n > Installing pacaur"
+./install-pacaur
+
+echo -e "\n > Installing system packages"
+pacaur -S sys-packages
+
+read -p " > Do you want to install core appliactions? [Y/n] " yn
+[ $yn ~= "[nN]*" ] || pacaur -S coreapps
+
+read -p " > Do you want to install extra appliactions? [y/N] " yn
+[ $yn ~= "[yY]*" ] && pacaur -S extraapps
+
+echo -e "\n > Starting a shell, use this to generate/copy SSH keys then exit when done:"
+cd ~
+mkdir -p ~/.ssh
+$SHELL
+
+echo -e "\n > Setting key file permissions"
+chmod 700 ~/.ssh
+chmod 400 ~/.ssh/id_*
+chmod 644 ~/.ssh/id_*.pub
+
+mkdir -p ~/.config
+git clone git@github.com:frebib/dotfiles.git ~/.config/dotfiles
+
+cd ~/.config/dotfiles
+
+echo -e "\n > Linking dotfiles"
+scripts/linkdotfiles
+scripts/vim-setup

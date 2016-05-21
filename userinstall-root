@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Symlink vim to vi
+ln -sfv `which vim` /usr/bin/vi
+
+# Enable pacman colours & multilib
+sed -i '/#Color/s/^#//' /etc/pacman.conf
+sed -i -e '/^#\[multilib\]/{s/#//;N;s/#//}' /etc/pacman.conf
+
+# Give wheel sudo access
+sed -i '/# %wheel ALL=(ALL) ALL/s/^#//' /etc/sudoers
