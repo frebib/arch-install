@@ -48,7 +48,7 @@ chmod 400 ~/.ssh/id_*
 chmod 644 ~/.ssh/id_*.pub
 
 mkdir -p ~/.config
-git clone git@github.com:frebib/dotfiles.git ~/.config/dotfiles
+git clone -b surface git@github.com:frebib/dotfiles.git ~/.config/dotfiles
 
 cd ~/.config/dotfiles
 git submodule init && git submodule update
