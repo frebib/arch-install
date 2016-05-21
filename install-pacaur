@@ -9,7 +9,7 @@ fi
 cd /tmp
 
 # Install dependencies
-sudo pacman -S --asdeps git curl yajl gnupg --needed
+sudo pacman -Sy --asdeps git curl yajl gnupg --needed
 
 # Get PGP keys so it builds
 gpg --keyserver hkp://pgp.mit.edu --recv-keys 1EB2638FF56C0C53
