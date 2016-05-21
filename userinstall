@@ -74,6 +74,7 @@ systemctl enable --now devmon@$(whoami)
 systemctl enable --now xlogin@$(whoami)
 systemctl enable --now sshd
 systemctl enable --now teamviewerd
+systemctl enable --now tlp
 
 echo -e "\n > Adding Surface-specific system configs"
 git clone git@github.com:frebib/surface-config.git
