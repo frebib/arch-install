@@ -74,3 +74,9 @@ systemctl enable --now devmon@$(whoami)
 systemctl enable --now xlogin@$(whoami)
 systemctl enable --now sshd
 systemctl enable --now teamviewerd
+
+echo -e "\n > Adding Surface-specific system configs"
+git clone git@github.com:frebib/surface-config.git
+sudo mv surface-config /usr/share
+chmod 777 /usr/share/surface-config
+sudo /usr/share/surface-config/linkconfig
