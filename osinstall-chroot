@@ -19,7 +19,8 @@ echo -e "\n > Setting the system keymap"
 echo "KEYMAP=dvorak-uk" > /etc/vconsole.conf
 
 read -p "`echo $'\n'` > Do you want to edit the mkinitcpio build hooks? [y/N] " yn
-sed -i 's|^\(HOOKS=".* block\).*\(filesystems.*"\)|\1 keymap encrypt lvm2 btrfs \2|' /etc/mkinitcpio.conf
+sed -i 's|^\(HOOKS=".* block\).*\(filesystems.*"\)|\1 keymap keyboard encrypt lvm2 btrfs \2|' /etc/mkinitcpio.conf
+sed -i '/^HOOKS=".*"/s/filesystems keyboard/filesystems/' /etc/mkinitcpio.conf
 case $yn in
     [Yy]* ) vim /etc/mkinitcpio.conf; break;;
         * ) break;;
