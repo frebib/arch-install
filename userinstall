@@ -24,13 +24,13 @@ echo -e "\n > Installing pacaur"
 ./install-pacaur
 
 echo -e "\n > Installing system packages"
-pacaur -S sys-packages
+pacaur -S `xargs -a sys-packages` --needed
 
 read -p " > Do you want to install core appliactions? [Y/n] " yn
-[ $yn ~= "[nN]*" ] || pacaur -S coreapps
+[[ $yn =~ "[nN]*" ]] || pacaur -S `xargs -a coreapps` --needed
 
 read -p " > Do you want to install extra appliactions? [y/N] " yn
-[ $yn ~= "[yY]*" ] && pacaur -S extraapps
+[[ $yn =~ "[yY]*" ]] && pacaur -S `xargs -a extraapps` --needed
 
 echo -e "\n > Starting a shell, use this to generate/copy SSH keys then exit when done:"
 cd ~
