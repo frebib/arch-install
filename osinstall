@@ -44,11 +44,11 @@ echo -e "\n > Entering chroot...\n"
 
 # Copy the chroot script into the new root
 dir=`dirname ${BASH_SOURCE[0]}`
-cp $dir/osinstall-chroot $dir/osinstall-refind /mnt
-arch-chroot /mnt /osinstall-chroot
+cp -r $dir /mnt
+arch-chroot /mnt /$dir/osinstall-chroot
 
 # Remove chroot script
-rm /mnt/osinstall-chroot
+rm -rf /mnt/$dir
 
 # Reboot
 read -p "`echo $'\n'` > Reboot? [Y/n] " yn
