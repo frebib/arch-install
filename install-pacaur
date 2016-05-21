@@ -6,8 +6,10 @@ if [ $EUID -eq 0 ]; then
     exit 1
 fi
 
+cd /tmp
+
 # Install dependencies
-sudo pacman -S --asdeps git curl yajl gnupg
+sudo pacman -S --asdeps git curl yajl gnupg --needed
 
 # Get PGP keys so it builds
 gpg --keyserver hkp://pgp.mit.edu --recv-keys 1EB2638FF56C0C53
@@ -15,13 +17,13 @@ gpg --keyserver hkp://pgp.mit.edu --recv-keys 1EB2638FF56C0C53
 # Fetch, build and install cower
 git clone https://aur.archlinux.org/cower.git
 cd cower
-makepkg -sri
+makepkg -sri --noconfirm
 
 # Fetch, build and install pacaur
 cd ..
 git clone https://aur.archlinux.org/pacaur.git
 cd pacaur
-makepkg -sri
+makepkg -sri --noconfirm
 
 cd ..
 rm -rf cower pacaur
