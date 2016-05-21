@@ -23,7 +23,7 @@ volname=$(mount | sed -n "s|/dev/mapper/$currentvg-\\(.*\\)\\s*on /\\s.*|\\1|p")
 
 # Write the boot configs to file
 kernelname=$(uname -s | tr '[:upper:]' '[:lower:]')
-quiet="loglevel=3 rd.systemd.show_status=false rd.udev.log-priority=3"
+quiet="quiet loglevel=3 rd.systemd.show_status=false rd.udev.log-priority=3"
 options="rw cryptdevice=UUID=$uuid:arch root=/dev/mapper/arch-$volname resume=/dev/mapper/arch-swap initrd=initramfs-$kernelname.img $quiet"
 
 echo -e "\"Boot with standard options\"    \"$options\"\n\"Boot to single-user mode\"      \"$options single\"" > /boot/refind_linux.conf
