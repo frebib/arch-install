@@ -1,3 +1,5 @@
+acpi
+acpid
 alsa-utils
 arandr
 aurtab
@@ -30,7 +32,9 @@ imgur-screenshot-git
 jdk8-openjdk
 jre8-openjdk
 libtinfo-5
-linux-headers
+linux-surfacepro3
+linux-surfacepro3-docs
+linux-surfacepro3-headers
 lm_sensors
 mtools
 networkmanager
@@ -40,8 +44,8 @@ nodejs
 noto-fonts-emoji
 npm
 ntfs-3g
-nvidia
 oh-my-zsh-git
+onboard
 openssh
 p7zip
 pacaur
@@ -52,10 +56,13 @@ pulseaudio-alsa
 redshift-minimal
 refind-efi
 rofi
+sbsigntools
 scrot
 sysstat
+terminus-font
 termite
 tree
+tlp
 ttf-font-awesome
 ttf-symbola
 udevil
@@ -67,6 +74,8 @@ xbindkeys
 xclip
 xdg-user-dirs
 xenlism-wildfire-icon-theme-git
+xf86-input-synaptics
+xf86-input-wacom
 xlogin-git
 xorg-server
 xorg-xev
