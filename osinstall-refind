@@ -25,7 +25,7 @@ volname=$(mount | sed -n "s|/dev/mapper/$currentvg-\\(.*\\)\\s*on /\\s.*|\\1|p")
 read -p " > Enter the kernel name [default: linux] " kernel
 [[ -z $kernel ]] && kernel="linux"
 quiet="quiet loglevel=3 rd.systemd.show_status=false rd.udev.log-priority=3"
-options="rw cryptdevice=UUID=$uuid:arch root=/dev/mapper/arch-$volname resume=/dev/mapper/arch-swap initrd=initramfs-$kernelname.img $quiet"
+options="rw cryptdevice=UUID=$uuid:arch root=/dev/mapper/arch-$volname resume=/dev/mapper/arch-swap initrd=initramfs-$kernel.img $quiet"
 
 echo -e "\"Boot with standard options\"    \"$options\"\n\"Boot to single-user mode\"      \"$options single\"" > /boot/refind_linux.conf
 echo -e "\n > Written rEFInd boot configuration to /boot/refind_linux.conf"
