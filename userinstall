@@ -34,6 +34,9 @@ read -p " > Do you want to install core appliactions? [Y/n] " yn
 read -p " > Do you want to install extra appliactions? [y/N] " yn
 [[ $yn =~ "[yY]*" ]] && pacaur -S `xargs -a extraapps` --needed
 
+# Remove orphans and build-deps
+pacaur -Rnsc `pacaur -Qqdt`
+
 echo -e "\n > Starting a shell, use this to generate/copy SSH keys then exit when done:"
 cd ~
 mkdir -p ~/.ssh
