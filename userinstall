@@ -55,3 +55,10 @@ cd ~/.config/dotfiles
 echo -e "\n > Linking dotfiles"
 scripts/linkdotfiles
 scripts/vim-setup
+
+echo -e "\n > Starting services"
+systemctl enable --now bluetooth
+systemctl enable --now NetworkManager
+systemctl enable --now devmon@$(whoami)
+systemctl enable --now xlogin@$(whoami)
+systemctl enable --now teamviewerd
