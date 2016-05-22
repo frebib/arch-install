@@ -29,3 +29,6 @@ options="rw cryptdevice=UUID=$uuid:arch root=/dev/mapper/arch-$volname resume=/d
 
 echo -e "\"Boot with standard options\"    \"$options\"\n\"Boot to single-user mode\"      \"$options single\"" > /boot/refind_linux.conf
 echo -e "\n > Written rEFInd boot configuration to /boot/refind_linux.conf"
+
+echo -e "\n > Signing kernel with local keys"
+sbsign --key /etc/refind.d/keys/refind_local.key --cert /etc/refind.d/keys/refind_local.crt --output /boot/vmlinuz-$kernel\-signed /boot/vmlinuz-$kernel
