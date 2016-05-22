@@ -72,4 +72,5 @@ systemctl enable --now bluetooth
 systemctl enable --now NetworkManager
 systemctl enable --now devmon@$(whoami)
 systemctl enable --now xlogin@$(whoami)
+systemctl enable --now sshd
 systemctl enable --now teamviewerd
