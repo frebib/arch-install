@@ -11,4 +11,5 @@ sed -i -e '/^#\[multilib\]/{s/#//;N;s/#//}' /etc/pacman.conf
 sed -i "/PKGEXT='.pkg.tar.xz'/s/.xz//" /etc/makepkg.conf
 
 # Give wheel sudo access
-sed -i '/# %wheel ALL=(ALL) ALL/s/^#//' /etc/sudoers
+sed -i '/# %wheel ALL=(ALL) ALL/s/^# //' /etc/sudoers
+sed -i '/%wheel ALL=(ALL) ALL/a %wheel ALL = NOPASSWD: /usr/bin/efibootmgr, /usr/bin/pacman' /etc/sudoers
