@@ -51,6 +51,7 @@ mkdir -p ~/.config
 git clone git@github.com:frebib/dotfiles.git ~/.config/dotfiles
 
 cd ~/.config/dotfiles
+git submodule init && git submodule update
 
 echo -e "\n > Linking dotfiles"
 scripts/linkdotfiles
