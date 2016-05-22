@@ -71,6 +71,7 @@ xlogin-git
 xorg-server
 xorg-xev
 xorg-xinit
+xorg-xinput
 xorg-xrandr
 xorg-xrdb
 xtitle
