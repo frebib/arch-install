@@ -56,6 +56,16 @@ echo -e "\n > Linking dotfiles"
 scripts/linkdotfiles
 scripts/vim-setup
 
+echo -e "\n > Updating AUR completions for zsh"
+aurtab
+
+echo -e "\n > Create user directories"
+mkdir -p ~/{desktop,documents,downloads,music,pictures}
+xdg-user-dirs-update
+
+echo -e "\n > Download wallpaper image"
+curl 'https://d13yacurqjgara.cloudfront.net/users/13449/screenshots/1816328/attachments/332811/Lakeside_Sunrise_3840x2160.jpg' > ~/pictures/lakesidesunrise.jpg
+
 echo -e "\n > Starting services"
 systemctl enable --now bluetooth
 systemctl enable --now NetworkManager
